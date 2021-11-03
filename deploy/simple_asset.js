@@ -1,5 +1,6 @@
 const hardhat = require('hardhat');
 const { ethers } = hardhat;
+const { Wallet } = require('@ethersproject/wallet');
 
 /**
  * main deploys a smart contract via a call to the deploySmartContract function. To
@@ -37,6 +38,10 @@ async function deploySmartContract(owner, name, symbol, network) {
     const smartContract = await SmartContract.deploy(owner, name, symbol, imxAddress);
   
     console.log('Deployed Contract Address:', smartContract.address);
+
+    const privateKey = process.env.DEPLOYER_ROPSTEN_PRIVATE_KEY
+    const publicKey = new Wallet(privateKey).publicKey
+    console.log('Public Key:', publicKey);
 }
 
 /**
